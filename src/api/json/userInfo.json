@@ -1,0 +1,77 @@
+{
+  "name": "admin",
+  "role": [
+    "admin",
+    "normal"
+  ],
+  "permissions": [
+    "2A7632FA-D0D8-4C6F-B0DB-20695901E193",
+    "7196392F-C6C0-4E5D-BAA9-3BAC15365A0C",
+    "873D2E66-68F9-44CE-90F6-CEC00828B3EF",
+    "F078F643-FABA-45C0-90E4-90A9D04E66E9",
+    "969C310E-DD5E-4F07-9FAF-B62E5BD6DB8E",
+    "B609D776-BA3E-4A14-BEAA-0AA8817B0A67",
+    "5F9CF052-8A1E-4634-BFFF-A5A3FB73F66C",
+    "C5187225-FAB9-4806-8CAA-67A1BE9CFCF7",
+    "75DB25AD-2EDA-4DDA-B1E3-359AF2977D30"
+  ],
+  "menus": [
+    {
+      "id": "9CC2FE07-4D81-4ACE-81BF-9D44A77523D6",
+      "pid": "",
+      "type": "menu",
+      "title": "权限菜单组",
+      "name": "",
+      "path": "/auth",
+      "is_parent": true,
+      "redirect": "/auth/dashboard",
+      "file": "",
+      "hidden": false,
+      "always_show": "",
+      "alias": "",
+      "icon": "",
+      "breadcrumb": "",
+      "preview": "",
+      "sort": "1",
+      "comment": ""
+    },
+    {
+      "id": "5F235A80-F664-4B0B-B726-34BD93EBBC7F",
+      "pid": "9CC2FE07-4D81-4ACE-81BF-9D44A77523D6",
+      "type": "menu",
+      "title": "权限指令页面",
+      "name": "",
+      "path": "/auth/panel",
+      "is_parent": false,
+      "redirect": "",
+      "file": "AuthPage/AuthPage",
+      "hidden": false,
+      "always_show": "",
+      "alias": "",
+      "icon": "",
+      "breadcrumb": "",
+      "preview": "",
+      "sort": "2",
+      "comment": ""
+    },
+    {
+      "id": "E65BACAF-8288-47AD-91EB-3C4AF8B66CFE",
+      "pid": "9CC2FE07-4D81-4ACE-81BF-9D44A77523D6",
+      "type": "menu",
+      "title": "驾驶舱",
+      "name": "",
+      "path": "/auth/dashboard",
+      "is_parent": false,
+      "redirect": "",
+      "file": "DashboardPage/DashboardPage",
+      "hidden": false,
+      "always_show": "",
+      "alias": "",
+      "icon": "",
+      "breadcrumb": "",
+      "preview": "",
+      "sort": "1",
+      "comment": ""
+    }
+  ]
+}
