@@ -5,7 +5,12 @@ import { executeMenus, listToTree } from "../utils/util";
 import storage from "store";
 import { ACCESS_TOKEN } from "./multation-types.js";
 
-import { constantRouterMap } from "../router/router.config";
+import {
+  asyncRouterMap,
+  constantRouterMap,
+  generateRoutes
+} from "../router/router.config";
+
 const lastToken = storage.get(ACCESS_TOKEN) || "";
 
 Vue.use(Vuex);
@@ -20,12 +25,17 @@ export default new Vuex.Store({
   state: {
     login: !!lastToken,
     token: lastToken,
+    active: "",
     name: "",
     role: [],
     permissions: [],
+    addRouters: [],
     menus: []
   },
   mutations: {
+    SET_ACTIVE(state, path) {
+      state.active = path;
+    },
     SET_TOKEN(state, token) {
       state.token = token;
     },
@@ -44,14 +54,23 @@ export default new Vuex.Store({
     SET_PERMISSIONS(state, permissions) {
       state.permissons = permissions;
     },
-    SET_ROUTERS: (state, routers) => {
-      const newRoutes = routers.concat(notFoundRoute);
+    SET_ROUTERS: (state, menus) => {
+      const _tree = listToTree(menus, {
+        isRoot: x => x.pid === "" || x.pid == null
+      });
+      const routes = generateRoutes(_tree);
+      const _newRouters = [...asyncRouterMap];
+      _newRouters[0].children = _newRouters[0].children.concat(routes);
+      const newRoutes = _newRouters.concat(notFoundRoute);
       state.addRouters = newRoutes;
       const _routes = (state.routers = constantRouterMap.concat(newRoutes));
       state.menus = executeMenus(_routes);
     }
   },
   actions: {
+    UpdatePath({ commit }, path) {
+      commit("SET_ACTIVE", path);
+    },
     Login({ commit }, userInfo) {
       return new Promise((resolve, reject) => {
         login(userInfo)
@@ -75,13 +94,9 @@ export default new Vuex.Store({
               commit("SET_LOGIN", true);
               commit("SET_NAME", name);
               commit("SET_ROLE", role);
-              const _tree = listToTree(menus, {
-                isRoot: x => x.pid === "" || x.pid == null
-              });
-              const routes = executeMenus(_tree);
-              commit("SET_MENUS", menus);
+              commit("SET_ROUTERS", menus);
               commit("SET_PERMISSIONS", permissions);
-              resolve(routes);
+              resolve();
             } else {
               reject();
             }
@@ -107,7 +122,9 @@ export default new Vuex.Store({
     name: state => state.name,
     roles: state => state.role,
     menus: state => state.menus,
-    permissions: state => state.permissions
+    permissions: state => state.permissions,
+    addRouters: state => state.addRouters,
+    active: state => state.active
   },
   modules: {}
 });

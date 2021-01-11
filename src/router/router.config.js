@@ -1,14 +1,14 @@
 import _ParentWrapper from "../components/ParentWrapper/Index.vue";
 import _BasicLayout from "../core/Layout/index.vue";
 
-const ParentWrapper = () => import("../core/Layout/index.vue");
+const ParentWrapper = () => import("../views/Parent/default.vue");
 
 function resolveViewComponent(filePath) {
   return () => import(`@/views/${filePath || "Parent/default"}.vue`);
 }
 
 const menuPatchViewComponent = menu => {
-  if (menu.is_route || menu.children.length) {
+  if (menu.is_route || (menu.children && menu.children.length)) {
     return {
       path: menu.path,
       component: ParentWrapper
@@ -28,7 +28,7 @@ const menuPatchViewComponent = menu => {
 export const generateRoutes = menusTree => {
   function recursiveFn(menus) {
     return menus.map(menu => {
-      const _r = menuPatchViewComponent(menu.file);
+      const _r = menuPatchViewComponent(menu);
       const _route = {
         ..._r,
         meta: { title: menu.title, icon: menu.icon },
@@ -66,7 +66,6 @@ export const asyncRouterMap = [
  * @type { *[] }
  */
 export const constantRouterMap = [
-  ...asyncRouterMap,
   {
     path: "/user",
     component: _ParentWrapper,

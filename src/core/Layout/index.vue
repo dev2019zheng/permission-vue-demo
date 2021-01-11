@@ -9,43 +9,38 @@
       </Header>
       <Layout>
         <Sider hide-trigger :style="{ background: '#fff' }">
-          <Menu
-            active-name="1-2"
-            theme="light"
-            width="auto"
-            :open-names="['1']"
-          >
-            <Submenu name="1">
-              <template slot="title">
-                <Icon type="ios-navigate"></Icon>
-                Item 1
-              </template>
-              <MenuItem name="1-1">Option 1</MenuItem>
-              <MenuItem name="1-2">Option 2</MenuItem>
-              <MenuItem name="1-3">Option 3</MenuItem>
-            </Submenu>
-            <Submenu name="2">
-              <template slot="title">
-                <Icon type="ios-keypad"></Icon>
-                Item 2
-              </template>
-              <MenuItem name="2-1">Option 1</MenuItem>
-              <MenuItem name="2-2">Option 2</MenuItem>
-            </Submenu>
-            <Submenu name="3">
-              <template slot="title">
-                <Icon type="ios-analytics"></Icon>
-                Item 3
-              </template>
-              <MenuItem name="3-1">Option 1</MenuItem>
-              <MenuItem name="3-2">Option 2</MenuItem>
-            </Submenu>
+          <Menu :active-name="$store.getters.active" theme="light" width="auto">
+            <div v-for="menu in $store.getters.menus" :key="menu.path">
+              <MenuItem
+                v-if="!menu.children || menu.children.length === 0"
+                :name="menu.path"
+                :key="menu.path"
+                @click.native="goto(menu)"
+              >
+                {{ menu.meta.title }}
+              </MenuItem>
+              <Submenu v-else :name="menu.path" @click.native="goto(menu)">
+                <template slot="title">
+                  <Icon type="ios-navigate"></Icon>
+                  {{ menu.meta.title }}
+                </template>
+                <MenuItem
+                  v-for="item in menu.children"
+                  :name="item.path"
+                  :key="item.path"
+                  @click.native="goto(item)"
+                >
+                  {{ item.meta.title }}
+                </MenuItem>
+              </Submenu>
+            </div>
           </Menu>
         </Sider>
         <Layout :style="{ padding: '0 24px 24px' }">
           <Breadcrumb :style="{ margin: '24px 0' }">
-            <BreadcrumbItem>Home</BreadcrumbItem>
-            <BreadcrumbItem>Layout</BreadcrumbItem>
+            <BreadcrumbItem v-for="bc in breadcrumbs" :key="bc">{{
+              bc
+            }}</BreadcrumbItem>
           </Breadcrumb>
           <Content
             :style="{
@@ -63,12 +58,27 @@
 </template>
 
 <script>
+import { extractParents } from "@/utils/util";
+
 export default {
   data() {
     return {};
   },
-  methods: {},
+  mounted() {
+    console.log(this.$store.getters.menus);
+  },
+  methods: {
+    goto(menu) {
+      this.$router.push(menu.path);
+    }
+  },
   computed: {
+    breadcrumbs() {
+      const _path = this.$store.getters.active;
+      const _menus = this.$store.getters.menus;
+      const bs = extractParents(_menus)(_path);
+      return bs.map(x => x.meta.title);
+    },
     cStyle() {
       const { path } = this.$route;
       return {

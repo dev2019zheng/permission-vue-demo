@@ -21,7 +21,6 @@ export function createPermission(router) {
   const whiteList = ["login", "register", "registerResult"]; // no redirect whitelist
   const isWhiteList = makeMap(whiteList.join(","));
   return function() {
-    ViewUI.LoadingBar.start();
     console.log("%c set beforeEach ", "color:blue;");
     // before each
     router.beforeEach((to, from, next) => {
@@ -42,15 +41,13 @@ export function createPermission(router) {
           if (!store.getters.hasInfo) {
             // request login userInfo
             store
-              .dispatch("getUserInfo")
-              .then(newRoutes => {
+              .dispatch("getUserInfo", store.getters.token)
+              .then(() => {
                 // generate dynamic router
                 // 根据roles权限生成可访问的路由表
                 // 动态添加可访问路由表
-                // router.addRoutes(store.getters.addRouters);
+                router.addRoutes(store.getters.addRouters);
                 // 请求带有 redirect 重定向时，登录自动重定向到该地址
-                // router.addRouters(newRoutes);
-                console.log(newRoutes);
                 const redirect = decodeURIComponent(
                   from.query.redirect || to.path
                 );
@@ -88,7 +85,10 @@ export function createPermission(router) {
         }
       }
     });
-    // router.beforeResolve(() => {});
+    router.beforeResolve((to, from, next) => {
+      store.dispatch("UpdatePath", to.fullPath);
+      next();
+    });
     router.afterEach(() => {
       ViewUI.LoadingBar.finish();
     });
