@@ -109,6 +109,11 @@ export default new Vuex.Store({
     },
     doLogout({ commit }) {
       return new Promise(resolve => {
+        commit("SET_TOKEN", "");
+        commit("SET_NAME", "");
+        commit("SET_ROUTERS", []);
+        commit("SET_ROLE", []);
+        commit("SET_MENUS", []);
         commit("SET_LOGIN", false);
         storage.remove(ACCESS_TOKEN);
         resolve({});

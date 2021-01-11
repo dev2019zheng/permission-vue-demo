@@ -4,7 +4,9 @@
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
           <div class="layout-logo"></div>
-          <div class="layout-nav"></div>
+          <div class="layout-nav">
+            <Button @click="Logout">退出登陆</Button>
+          </div>
         </Menu>
       </Header>
       <Layout>
@@ -38,9 +40,9 @@
         </Sider>
         <Layout :style="{ padding: '0 24px 24px' }">
           <Breadcrumb :style="{ margin: '24px 0' }">
-            <BreadcrumbItem v-for="bc in breadcrumbs" :key="bc">{{
-              bc
-            }}</BreadcrumbItem>
+            <BreadcrumbItem v-for="bc in breadcrumbs" :key="bc"
+              >{{ bc }}
+            </BreadcrumbItem>
           </Breadcrumb>
           <Content
             :style="{
@@ -70,6 +72,13 @@ export default {
   methods: {
     goto(menu) {
       this.$router.push(menu.path);
+    },
+    Logout() {
+      this.$store.dispatch("doLogout").then(() => {
+        this.$nextTick(() => {
+          window.location.reload();
+        });
+      });
     }
   },
   computed: {
@@ -113,5 +122,6 @@ export default {
   width: 420px;
   margin: 0 auto;
   margin-right: 20px;
+  text-align: right;
 }
 </style>
