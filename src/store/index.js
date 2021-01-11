@@ -10,6 +10,7 @@ import {
   constantRouterMap,
   generateRoutes
 } from "../router/router.config";
+import { setPermissions } from "@/core/directive/permisson";
 
 const lastToken = storage.get(ACCESS_TOKEN) || "";
 
@@ -52,7 +53,8 @@ export default new Vuex.Store({
       state.menus = menus;
     },
     SET_PERMISSIONS(state, permissions) {
-      state.permissons = permissions;
+      setPermissions(permissions);
+      state.permissions = permissions;
     },
     SET_ROUTERS: (state, menus) => {
       const _tree = listToTree(menus, {

@@ -1,32 +1,20 @@
 import Vue from "vue";
 
+const localPermissions = [];
 /**权限指令**/
 const has = Vue.directive("has", {
-  //当被绑定的元素插入到DOM中时……
-  inserted: function(el, binding, vNode) {
-    let btnPermissions = "";
-    //获取指令按钮权限
-    let characteristic = binding.value;
-    if (characteristic) btnPermissions = characteristic;
-    //获取路由按钮权限
-    btnPermissions = vNode.context.$route.meta.btnPermissions.split(",");
-    if (!Vue.prototype.$_has(btnPermissions)) {
-      el.parentNode.removeChild(el);
+  bind(el, binding) {
+    if (!localPermissions.includes(binding.value)) {
+      el.innerHTML = "<p class='no-auth-tip'>无权限</p>";
     }
   }
 });
 
 // 权限检查方法
 Vue.prototype.$_has = function(value) {
-  let isExist = false;
-  let btnPermissionsStr = sessionStorage.getItem("btnPermissions");
-  if (btnPermissionsStr == null) {
-    return false;
-  }
-  let res = value.filter(x => {
-    return btnPermissionsStr.include(x);
-  });
-  if (res.length > 0) isExist = true;
-  return isExist;
+  return this.$store.getters.permissions.includes(value);
 };
-export { has };
+function setPermissions(ps) {
+  Array.prototype.push.apply(localPermissions, ps);
+}
+export { has, setPermissions };

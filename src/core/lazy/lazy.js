@@ -1,4 +1,5 @@
 import Vue from "vue";
+import PanelCard from "../../components/PanelCard/index.js";
 
 import {
   Layout,
@@ -29,6 +30,7 @@ import {
   FormItem,
   Notice
 } from "view-design";
+import { has } from "@/core/directive/permisson";
 
 Vue.component("Button", Button);
 Vue.component("Layout", Layout);
@@ -49,11 +51,14 @@ Vue.component("Form", Form);
 Vue.component("FormItem", FormItem);
 Vue.component("Tree", Tree);
 Vue.component("Upload", Upload);
-Vue.component("Row", Row);
-Vue.component("Col", Col);
+Vue.component("i-row", Row);
+Vue.component("i-col", Col);
 Vue.component("Card", Card);
 Vue.component("i-circle", Circle);
 Vue.component("Content", Content);
 Vue.component("LoadingBar", LoadingBar);
 Vue.prototype.$Message = Message;
 Vue.prototype.$Notice = Notice;
+
+Vue.component("PanelCard", PanelCard);
+Vue.directive("has", has);

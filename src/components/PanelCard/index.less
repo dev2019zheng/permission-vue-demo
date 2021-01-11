@@ -1,0 +1,59 @@
+.panel-card {
+  background: #ffffff;
+  border-radius: 6px 6px 0px 0px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .12);
+  border-bottom: 3px solid #98DEFF;
+  transition: box-shadow 0.3s;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+    transition: box-shadow 0.3s;
+  }
+
+  &-head {
+    padding: 0px 14px;
+
+    &-wrapper {
+    }
+
+    &-title {
+      padding: 8px 0;
+
+      &-prefix {
+        margin-right: 8px;
+        position: relative;
+        &::before,
+        &::after {
+          content: " ";
+          position: absolute;
+          width: 3px;
+          height: 8px;
+          left: 0;
+        }
+        &::before {
+          top: 0;
+          background: #e83e1b;
+        }
+        &::after {
+          bottom: 0;
+          background: #0c4890;
+        }
+      }
+
+      &-label {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: left;
+        color: #3170cc;
+      }
+    }
+  }
+
+  &-body {
+    padding: 0px 10px 10px 10px;
+  }
+}
+
+.panel-card-bordered {
+  border: 1px solid #e8e8e8;
+}

@@ -8,4 +8,10 @@
 export default {};
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.no-auth-tip {
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+}
+</style>
