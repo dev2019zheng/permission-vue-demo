@@ -1,20 +1,20 @@
 <template>
   <div class="auth-page">
-    <h2>auth page</h2>
-    <i-row :gutter="15">
+    <h2>权限控制页面-控制粒度到页面上每个元素</h2>
+    <i-row :gutter="15" class="mt-15">
       <i-col :span="12">
         <PanelCard title="测试权限1">
           <div v-has="authCodes[0]">
-            <h2>权限panel测试</h2>
-            <p>权限code: [{{ authCodes[0] }}]</p>
+            <h3>权限元素测试</h3>
+            <p>...其他代码</p>
           </div>
         </PanelCard>
       </i-col>
       <i-col :span="12">
         <PanelCard title="测试权限2">
           <div v-has="authCodes[1]">
-            <h2>权限panel测试</h2>
-            <p>权限code: [{{ authCodes[1] }}]</p>
+            <h3>权限元素测试</h3>
+            <p>权限代码: [{{ authCodes[1] }}]</p>
           </div>
         </PanelCard>
       </i-col>

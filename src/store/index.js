@@ -89,10 +89,11 @@ export default new Vuex.Store({
     },
     getUserInfo({ commit, state }, token) {
       return new Promise((resolve, reject) => {
-        fetchUserInfo(token, state.token === tokens.admin ? "admin" : "other")
+        const name = state.token === tokens.admin ? "admin" : "other";
+        fetchUserInfo(token, name)
           .then(([error, model]) => {
             if (!error) {
-              const { name, role = [], menus = [], permissions = [] } = model;
+              const { role = [], menus = [], permissions = [] } = model;
               commit("SET_LOGIN", true);
               commit("SET_NAME", name);
               commit("SET_ROLE", role);

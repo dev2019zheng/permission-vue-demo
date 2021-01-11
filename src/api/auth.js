@@ -24,8 +24,7 @@ export function login({ username, password }) {
   });
 }
 
-export function fetchUserInfo(token, username) {
-  console.log(token);
+export function fetchUserInfo(_, username) {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve([false, username === "admin" ? adminInfo : userInfo]);

@@ -1,9 +1,6 @@
 {
   "name": "admin",
-  "role": [
-    "admin",
-    "normal"
-  ],
+  "role": ["admin", "normal"],
   "permissions": [
     "2A7632FA-D0D8-4C6F-B0DB-20695901E193",
     "7196392F-C6C0-4E5D-BAA9-3BAC15365A0C",

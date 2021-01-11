@@ -3,8 +3,9 @@
     <Layout>
       <Header>
         <Menu mode="horizontal" theme="dark" active-name="1">
-          <div class="layout-logo"></div>
+          <div class="layout-logo">TJ-权限框架</div>
           <div class="layout-nav">
+            <span class="user-name">{{ $store.getters.name }}</span>
             <Button @click="Logout">退出登陆</Button>
           </div>
         </Menu>
@@ -66,9 +67,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    console.log(this.$store.getters.menus);
-  },
+  mounted() {},
   methods: {
     goto(menu) {
       this.$router.push(menu.path);
@@ -98,7 +97,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .layout {
   border: 1px solid #d7dde4;
   background: #f5f7f9;
@@ -108,8 +107,12 @@ export default {
 }
 
 .layout-logo {
-  width: 100px;
+  width: 200px;
   height: 30px;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  line-height: 32px;
   background: #5b6270;
   border-radius: 3px;
   float: left;
@@ -123,5 +126,10 @@ export default {
   margin: 0 auto;
   margin-right: 20px;
   text-align: right;
+  .user-name {
+    color: white;
+    font-size: 20px;
+    padding-right: 20px;
+  }
 }
 </style>

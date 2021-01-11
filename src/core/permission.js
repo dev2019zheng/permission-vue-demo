@@ -21,22 +21,18 @@ export function createPermission(router) {
   const whiteList = ["login", "register", "registerResult"]; // no redirect whitelist
   const isWhiteList = makeMap(whiteList.join(","));
   return function() {
-    console.log("%c set beforeEach ", "color:blue;");
     // before each
     router.beforeEach((to, from, next) => {
       ViewUI.LoadingBar.start();
-      // console.log('%c before route :>>> ', 'color: #007fff;', to)
       to.meta &&
         typeof to.meta.title !== "undefined" &&
         setDocumentTitle(`${to.meta.title} - ${domTitle}`);
       /* has token */
       if (storage.get(ACCESS_TOKEN)) {
-        // console.log('%c has permission ', 'color:blue;')
         if (to.path === loginRoutePath) {
           next({ path: defaultRoutePath });
           ViewUI.LoadingBar.finish();
         } else {
-          // console.log('%c has permission ', 'color:blue;')
           // check login user.roles is null
           if (!store.getters.hasInfo) {
             // request login userInfo
