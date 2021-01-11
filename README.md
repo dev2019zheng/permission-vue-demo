@@ -1,4 +1,12 @@
-# vue-demo
+# permission-vue-demo
+
+## 开发目的
+
+构建一个Vue权限框架，包括路由权限控制，以及页面自定义指令权限控制
+
+## 核心代码
+
+使用view-design, 核心代码放在src/core目录下
 
 ## Project setup
 ```
